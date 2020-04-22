@@ -1,0 +1,7 @@
+FROM node:carbon
+
+WORKDIR /data/
+
+EXPOSE 8080
+
+CMD ["npm", "run", "docker"]
