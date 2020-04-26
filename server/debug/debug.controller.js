@@ -1,5 +1,9 @@
-const db = require("../db/testUsers");
+const db = require("../models");
+
 
 exports.listUsers = (req, res) => {
-  res.status(200).send(db.getUsers());
+  db.user.findAll({ raw: true })
+    .then(function (data) {
+      res.status(200).send(data);
+    })
 };

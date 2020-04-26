@@ -10,7 +10,7 @@
 export default {};
 </script>
 
-<style >
+<style>
 .container {
   padding: 12px;
   width: 100%;

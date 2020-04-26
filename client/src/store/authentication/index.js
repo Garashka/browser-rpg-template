@@ -1,12 +1,12 @@
 // TODO: Remove error suppression when TODO's are complete
 /*eslint-disable no-unused-vars*/
 
-import AuthService from '../../services/authentication.services';
+import AuthService from "../../services/authentication.services";
 
 const initialState = {
   user: null,
   status: { loggedIn: false }
-}
+};
 
 export const authentication = {
   namespaced: true,
@@ -15,32 +15,32 @@ export const authentication = {
     login({ commit }, user) {
       return AuthService.login(user).then(
         user => {
-          commit('loginSuccess', user);
+          commit("loginSuccess", user);
           return Promise.resolve(user);
         },
         error => {
-          commit('loginFailure');
+          commit("loginFailure");
           return Promise.reject(error);
         }
-      )
+      );
     },
 
     logout({ commit }) {
       // AuthService.logout();
-      commit('logout');
+      commit("logout");
     },
 
     register({ commit }, user) {
       return AuthService.register(user).then(
         response => {
-          commit('registerSuccess');
+          commit("registerSuccess");
           return Promise.resolve(response.data);
         },
         error => {
-          commit('registerFailure');
+          commit("registerFailure");
           return Promise.reject(error);
         }
-      )
+      );
     }
   },
   mutations: {
@@ -53,13 +53,13 @@ export const authentication = {
       state.user = null;
     },
     logout(state) {
-      console.log('TODO: Implement logout');
+      console.log("TODO: Implement logout");
     },
     registerSuccess(state) {
-      console.log('TODO: Implement register success');
+      console.log("TODO: Implement register success");
     },
     registerFailure(state) {
-      console.log('TODO: Implement register failure');
+      console.log("TODO: Implement register failure");
     }
   }
-}
+};

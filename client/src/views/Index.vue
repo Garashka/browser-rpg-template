@@ -1,5 +1,5 @@
 <template>
-  <v-app id="">
+  <v-app id>
     <core-sidebar />
 
     <core-view />
@@ -12,16 +12,13 @@
 
 <script>
 export default {
-  props: {
-    source: String
-  },
-
   components: {
     CoreView: () => import("@/components/core/View"),
     CoreSidebar: () => import("@/components/core/Sidebar"),
     CoreFooter: () => import("@/components/core/Footer"),
     CoreHeader: () => import("@/components/core/Header")
   },
+  props: {},
 
   data: () => ({
     drawer: null
