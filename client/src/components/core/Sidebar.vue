@@ -9,7 +9,7 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item link to="/login">
+      <v-list-item v-if="!isLoggedIn" link to="/login">
         <v-list-item-action>
           <v-icon>mdi-settings</v-icon>
         </v-list-item-action>
@@ -29,6 +29,9 @@ export default {
         return this.$store.state.window.showLeftDrawer;
       },
       set() {}
+    },
+    isLoggedIn() {
+      return this.$store.state.authentication.status.loggedIn;
     }
   }
 };

@@ -27,9 +27,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-btn @click="handleLogin">
-            Log In
-          </v-btn>
+          <v-btn @click="handleLogin">Log In</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -56,7 +54,7 @@ export default {
   },
   computed: {
     loggedIn() {
-      return this.$store.state.status.loggedIn;
+      return this.$store.state.authentication.status.loggedIn;
     }
   },
   created() {
@@ -74,7 +72,8 @@ export default {
           })
           .then(
             response => {
-              this.$store.console.log(response);
+              console.log(response);
+              this.$router.push("/profile");
             },
             error => {
               console.log(error);
