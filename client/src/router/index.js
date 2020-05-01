@@ -20,6 +20,17 @@ const routes = [
         name: "Profile",
         path: "profile",
         component: () => import("@/views/user/Profile")
+      },
+      {
+        name: "Register",
+        path: "register",
+        component: () => import("@/views/user/Login"),
+        props: { defaultRegister: true }
+      },
+      {
+        name: "Game",
+        path: "/game",
+        component: () => import("@/views/Game")
       }
     ]
   },
@@ -42,11 +53,16 @@ router.beforeEach((to, from, next) => {
   const publicRoutes = ["/", "/login", "/register"];
   const doesNeedAuth = !publicRoutes.includes(to.path);
 
-  const isLoggedIn = store.state.authentication.status.loggedIn;
+  const isAuthenticated = store.getters["auth/isAuthenticated"];
 
-  if (doesNeedAuth && !isLoggedIn) {
-    console.log(`Invalid request for ${to.path} - redirect to login page`);
+  if (doesNeedAuth && !isAuthenticated) {
+    console.log(`Unauthorised request for ${to.path} - redirect to login page`);
     next("/login");
+  } else if (!doesNeedAuth && isAuthenticated) {
+    console.log(
+      `Attempt to access public path from authenticated user - redirect to game home page`
+    );
+    next("/game");
   } else {
     next();
   }

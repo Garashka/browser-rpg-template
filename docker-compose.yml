@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   client:
@@ -11,7 +11,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      HOST: 0.0.0.0
+      - HOST=0.0.0.0
+      - VUE_APP_API_URL=localhost:4000
 
   server:
     image: node:12.16.2

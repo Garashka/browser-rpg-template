@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { authentication } from "./authentication";
+import { users } from "./user";
+import auth from "./auth";
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {
-    authentication
+    users,
+    auth
   }
 });

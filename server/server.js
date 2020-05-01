@@ -14,6 +14,16 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Log all requests returning errors
+// app.use(function (error, req, res, next) {
+//   console.log(req);
+// });
+
+// Log all requests that don't return errors
+// app.use(function (req, res, next) {
+//   console.log(req);
+// })
+
 
 const db = require("./models");
 db.sequelize.sync({ force: true }).then(() => {

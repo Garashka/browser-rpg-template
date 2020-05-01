@@ -15,7 +15,9 @@ exports.signup = (req, res) => {
       res.send({ message: "User was registered successfully" });
     })
     .catch(error => {
-      res.send({ message: error.message })
+      return res.status(404).send({
+        message: "Username is taken"
+      })
     })
 };
 
@@ -28,13 +30,13 @@ exports.signin = (req, res) => {
     if (userData) {
       if (bcrypt.compareSync(req.body.password, userData.password)) {
         console.log(`Successful login attempt by ${req.body.username}`);
-        const token = jwt.sign({ id: userdata.id }, config.secret, {
+        const token = jwt.sign({ id: userData.id }, config.secret, {
           expiresIn: 86400 //1 day
         });
         res.status(200).send({
-          id: userdata.id,
-          username: userdata.username,
-          email: userdata.email,
+          id: userData.id,
+          username: userData.username,
+          email: userData.email,
           accessToken: token
         });
       } else {

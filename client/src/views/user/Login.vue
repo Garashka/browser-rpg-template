@@ -25,10 +25,18 @@ export default {
     AccountLogin,
     AccountRegister
   },
+  props: {
+    defaultRegister: Boolean
+  },
   data() {
     return {
-      tab: "login"
+      tab: 0
     };
+  },
+  created() {
+    if (this.defaultRegister === true) {
+      this.tab = 1;
+    }
   }
 };
 </script>

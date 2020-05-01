@@ -1,28 +1,38 @@
 <template>
   <v-navigation-drawer v-model="show" app clipped>
     <v-list dense>
-      <v-list-item link to="/">
-        <v-list-item-action>
-          <v-icon>mdi-view-dashboard</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>Home</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item v-if="!isLoggedIn" link to="/login">
-        <v-list-item-action>
-          <v-icon>mdi-settings</v-icon>
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>Login</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <SidebarNavItem
+        :title="'Home'"
+        :route="!isLoggedIn ? '\/' : '/game'"
+        :icon="'mdi-view-dashboard'"
+      />
+      <SidebarNavItem
+        v-if="!isLoggedIn"
+        :title="'Login'"
+        :route="'/login'"
+        :icon="'mdi-settings'"
+      />
+      <SidebarNavItem
+        v-if="!isLoggedIn"
+        :title="'Register'"
+        :route="'/register'"
+        :icon="'mdi-settings'"
+      />
     </v-list>
+
+    <template v-if="isLoggedIn" v-slot:append>
+      <div class="pa-2">
+        <v-btn block @click="logout">Logout</v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
+  components: {
+    SidebarNavItem: () => import("./SidebarNavigationItem.vue")
+  },
   computed: {
     show: {
       get() {
@@ -31,7 +41,13 @@ export default {
       set() {}
     },
     isLoggedIn() {
-      return this.$store.state.authentication.status.loggedIn;
+      return this.$store.getters["auth/isAuthenticated"];
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/");
     }
   }
 };

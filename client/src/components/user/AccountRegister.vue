@@ -15,12 +15,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-text-field
-            v-model="password"
-            label="Password"
-            type="password"
-            :rules="passwordRules"
-          />
+          <v-text-field v-model="password" label="Password" type="password" :rules="passwordRules" />
         </v-col>
       </v-row>
       <v-row>
@@ -70,17 +65,16 @@ export default {
     handleRegister() {
       if (this.$refs.form.validate() === true) {
         this.$store
-          .dispatch("authentication/register", {
+          .dispatch("auth/register", {
             username: this.username,
             password: this.password
           })
           .then(
-            () => {},
+            () => {
+              this.$router.push("/");
+            },
             error => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
+              this.message = error.response.data.message;
             }
           );
       }

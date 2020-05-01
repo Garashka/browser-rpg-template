@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form">
+  <v-form ref="form" @keyup.native.enter="handleLogin">
     <v-container fluid>
       <v-row class>
         <v-col>
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     loggedIn() {
-      return this.$store.state.authentication.status.loggedIn;
+      return this.$store.getters.isAuthenticated;
     }
   },
   created() {
@@ -66,19 +66,16 @@ export default {
     handleLogin() {
       if (this.$refs.form.validate() === true) {
         this.$store
-          .dispatch("authentication/login", {
+          .dispatch("auth/login", {
             username: this.username,
             password: this.password
           })
-          .then(
-            response => {
-              console.log(response);
-              this.$router.push("/profile");
-            },
-            error => {
-              console.log(error);
-            }
-          );
+          .then(() => {
+            this.$router.push("/game");
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     },
     validate() {

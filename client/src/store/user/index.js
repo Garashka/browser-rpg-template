@@ -4,19 +4,19 @@
 import AuthService from "../../services/authentication.services";
 
 const initialState = {
-  user: null,
+  profile: null,
   status: { loggedIn: false }
 };
 
-export const authentication = {
+export const users = {
   namespaced: true,
   state: initialState,
   actions: {
-    login({ commit }, user) {
-      return AuthService.login(user).then(
+    login({ commit }, profile) {
+      return AuthService.login(profile).then(
         user => {
-          commit("loginSuccess", user);
-          return Promise.resolve(user);
+          commit("loginSuccess", profile);
+          return Promise.resolve(profile);
         },
         error => {
           commit("loginFailure");
@@ -26,12 +26,12 @@ export const authentication = {
     },
 
     logout({ commit }) {
-      // AuthService.logout();
+      AuthService.logout();
       commit("logout");
     },
 
-    register({ commit }, user) {
-      return AuthService.register(user).then(
+    register({ commit }, profile) {
+      return AuthService.register(profile).then(
         response => {
           commit("registerSuccess");
           return Promise.resolve(response.data);
@@ -44,22 +44,23 @@ export const authentication = {
     }
   },
   mutations: {
-    loginSuccess(state, user) {
+    loginSuccess(state, profile) {
       state.status.loggedIn = true;
-      state.user = user;
+      state.profile = profile;
     },
     loginFailure(state) {
       state.status.loggedIn = false;
-      state.user = null;
+      state.profile = null;
     },
     logout(state) {
-      console.log("TODO: Implement logout");
+      state.status.loggedIn = false;
+      state.profile = null;
     },
     registerSuccess(state) {
       console.log("TODO: Implement register success");
     },
     registerFailure(state) {
-      console.log("TODO: Implement register failure");
+      state.status.loggedIn = false;
     }
   }
 };
